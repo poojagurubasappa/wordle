@@ -1,8 +1,8 @@
 package stacs.wordle;
 
 import stacs.wordle.model.WordleGame;
-import stacs.wordle.model.controller.WordleController;
-import stacs.wordle.model.view.WordleCLI;
+import stacs.wordle.controller.WordleController;
+import stacs.wordle.view.WordleCLI;
 
 import java.io.FileNotFoundException;
 

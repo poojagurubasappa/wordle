@@ -1,7 +1,7 @@
-package stacs.wordle.model.controller;
+package stacs.wordle.controller;
 
 import stacs.wordle.model.WordleGame;
-import stacs.wordle.model.view.WordleCLI;
+import stacs.wordle.view.WordleCLI;
 
 public class WordleController {
     private final WordleGame game;

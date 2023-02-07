@@ -1,6 +1,6 @@
-package stacs.wordle.model.view;
+package stacs.wordle.view;
 
-import stacs.wordle.model.controller.WordleController;
+import stacs.wordle.controller.WordleController;
 
 public class WordleCLI {
     public void setController(WordleController wordleController) {
