@@ -56,21 +56,21 @@ public class WordleAppTest
         String word1 = "debug";
         game.insertWordToGameBoard(word1);
         Character[][] gameBoard = game.getGameBoard();
-        assertEquals(gameBoard[0][0], 'd');
-        assertEquals(gameBoard[0][1], 'e');
-        assertEquals(gameBoard[0][2], 'b');
-        assertEquals(gameBoard[0][3], 'u');
-        assertEquals(gameBoard[0][4], 'g');
+        assertEquals(gameBoard[0][0], 'D');
+        assertEquals(gameBoard[0][1], 'E');
+        assertEquals(gameBoard[0][2], 'B');
+        assertEquals(gameBoard[0][3], 'U');
+        assertEquals(gameBoard[0][4], 'G');
         assertEquals(gameBoard[1][0], null);
 
         String word2 = "cache";
         game.insertWordToGameBoard(word2);
         Character[][] updatedGameBoard = game.getGameBoard();
-        assertEquals(updatedGameBoard[1][0], 'c');
-        assertEquals(updatedGameBoard[1][1], 'a');
-        assertEquals(updatedGameBoard[1][2], 'c');
-        assertEquals(updatedGameBoard[1][3], 'h');
-        assertEquals(updatedGameBoard[1][4], 'e');
+        assertEquals(updatedGameBoard[1][0], 'C');
+        assertEquals(updatedGameBoard[1][1], 'A');
+        assertEquals(updatedGameBoard[1][2], 'C');
+        assertEquals(updatedGameBoard[1][3], 'H');
+        assertEquals(updatedGameBoard[1][4], 'E');
         assertEquals(updatedGameBoard[2][0], null);
     }
 
@@ -97,12 +97,37 @@ public class WordleAppTest
         game.insertWordToGameBoard(randomWord);
         game.insertWordToGameBoard(randomWord);
         game.insertWordToGameBoard(randomWord);
-        assertFalse(game.getGameWon());
+        assertFalse(game.getHasWon());
+        assertTrue(game.getHasLost());
     }
 
+    @Test
     public void shouldTerminateGameOnGuessingChosenWord() {
         String chosenWord = game.getChosenWord();
         game.insertWordToGameBoard(chosenWord);
-        assertTrue(game.getGameWon());
+        assertTrue(game.getHasWon());
+    }
+
+    @Test
+    public void computeLetterPositioningIndicesByRow() {
+        String chosenWord = game.getChosenWord();
+        String randomWord = "";
+        for(String s: this.game.getWords()) {
+            if(!s.equals(chosenWord)) {
+                randomWord = s;
+                return;
+            }
+        }
+        game.insertWordToGameBoard(randomWord);
+        game.insertWordToGameBoard(randomWord);
+        for (int i = 0; i < game.getGameBoard().length; i++) {
+            this.game.computeLetterPositioningIndicesByRow(i);
+            assertTrue(game.getGreenLettersIndices().size() > 0);
+            assertTrue(game.getRedLettersIndices().size() > 0);
+            assertTrue(game.getYellowLettersIndices().size() > 0);
+            assertTrue(game.getAllMisplacedLetters().size() > 0);
+            assertTrue(game.getAllOptedLetters().size() > 0);
+            assertTrue(game.getAllRightlyGuessedLetters().size() > 0);
+        }
     }
 }
