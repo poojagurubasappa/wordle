@@ -9,17 +9,8 @@ public class WordleApp
 {
     public static void main( String[] args )
     {
-        System.out.println("Welcome to CS5031 - Wordle");
+        final String WORDS_LIST_PATH = "src/main/resources/wordlist.txt";
     }
 
-    protected static ArrayList<String> loadWordlist(String wordlistPath) throws FileNotFoundException
-    {
-        ArrayList<String> words = new ArrayList<String>();
-        Scanner scanner = new Scanner(new FileReader(wordlistPath));
-        while (scanner.hasNextLine()) {
-            words.add(scanner.nextLine());
-        }
-        scanner.close();
-        return words;
-    }
+
 }
