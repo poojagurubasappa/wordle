@@ -6,9 +6,14 @@
 
   <groupId>stacs.wordle</groupId>
   <artifactId>wordle</artifactId>
+  <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
 
   <name>wordle</name>
+  <description>
+    An interactive command line interface to simulate Wordle, the word game.
+    This is designed to work with Java applications packaged into JAR file.
+  </description>
   <url>https://studres.cs.st-andrews.ac.uk/CS5031/</url>
 
   <properties>
@@ -73,5 +78,6 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <finalName>wordle</finalName>
   </build>
 </project>
