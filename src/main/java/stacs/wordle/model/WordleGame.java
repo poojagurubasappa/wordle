@@ -11,6 +11,10 @@ public class WordleGame {
     private Character[][] gameBoard;
     private final String wordListFilePath;
     private ArrayList<String> words;
+
+    private String chosenWord;
+
+    private final String DEFAULT_WORD = "debug";
     public WordleGame(String wordListFilePath) {
         this.words = new ArrayList<>();
         this.wordListFilePath = wordListFilePath;
@@ -19,6 +23,7 @@ public class WordleGame {
     public void startGame() throws FileNotFoundException{
         this.gameBoard = new Character[MAX_ROW][MAX_COL];
         this.loadWordlist();
+        this.chosenWord = this.chooseARandomWord();
     }
 
     public void loadWordlist() throws FileNotFoundException
@@ -44,5 +49,22 @@ public class WordleGame {
 
     public ArrayList<String> getWords() {
         return words;
+    }
+
+    public String getChosenWord() {
+        return this.chosenWord;
+    }
+
+    private int generateRandomIndex(int range) {
+        return (int) (Math.random() * range);
+    }
+
+    private String chooseARandomWord() {
+        try {
+            int randomIndex = generateRandomIndex(words.size());
+            return this.words.get(randomIndex);
+        } catch (Exception e) {
+            return DEFAULT_WORD;
+        }
     }
 }
