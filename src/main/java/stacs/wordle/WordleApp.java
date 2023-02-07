@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.nio.file.Path;
 
 public class WordleApp
 {
@@ -13,10 +12,14 @@ public class WordleApp
         System.out.println("Welcome to CS5031 - Wordle");
     }
 
-    // Unimplemented skeleton
-    // You may refactor this method
     protected static ArrayList<String> loadWordlist(String wordlistPath) throws FileNotFoundException
     {
-        return new ArrayList<String>();
+        ArrayList<String> words = new ArrayList<String>();
+        Scanner scanner = new Scanner(new FileReader(wordlistPath));
+        while (scanner.hasNextLine()) {
+            words.add(scanner.nextLine());
+        }
+        scanner.close();
+        return words;
     }
 }

@@ -18,4 +18,9 @@ public class WordleAppTest
         // test wordlist only contains 3 words, so wordlist should have the size of 3
         assertEquals(3, wordlist.size());
     }
+
+    @Test
+    public void shouldLoadWordList_fileNameCannotBeInvalid() throws FileNotFoundException {
+        assertThrows(FileNotFoundException.class, () -> WordleApp.loadWordlist("src/test/resources/wordlistinvalid-test.txt"));
+    }
 }
