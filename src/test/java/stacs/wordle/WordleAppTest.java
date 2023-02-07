@@ -130,4 +130,16 @@ public class WordleAppTest
             assertTrue(game.getAllRightlyGuessedLetters().size() > 0);
         }
     }
+
+    @Test
+    public void getNumberOfGamesPlayed() {
+        int numberOfGamesPlayed = game.getStatistics().getNumberOfGamesPlayed();
+        assertEquals(numberOfGamesPlayed, 2);
+    }
+
+    @Test
+    public void getGameWinPercentage() {
+        double winPercentage = game.getStatistics().getWinPercentage();
+        assertTrue(winPercentage > 0);
+    }
 }
