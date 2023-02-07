@@ -30,7 +30,7 @@ public class WordleGame {
     {
         Scanner scanner = new Scanner(new FileReader(wordListFilePath));
         while (scanner.hasNextLine()) {
-            this.words.add(scanner.nextLine());
+            this.words.add(scanner.nextLine().toUpperCase());
         }
         scanner.close();
     }
@@ -72,12 +72,17 @@ public class WordleGame {
         }
     }
 
-    public void insertWordToGameBoard(String word) {
+    public void insertWordToGameBoard(String word) throws IllegalArgumentException{
         char letter;
-        for (int i = 0; i < this.gameBoard.length - 1; i++) {
-            letter = word.charAt(i);
-            this.gameBoard[this.numberOfGuess][i] = letter;
+        String formattedWord = word.toUpperCase();
+        if(this.words.contains(formattedWord)) {
+            for (int i = 0; i < this.gameBoard.length - 1; i++) {
+                letter = formattedWord.charAt(i);
+                this.gameBoard[this.numberOfGuess][i] = letter;
+            }
+            this.numberOfGuess++;
+        } else {
+            throw new IllegalArgumentException("Word Is Either Empty Or Not Found In Acceptable List");
         }
-        this.numberOfGuess++;
     }
 }
