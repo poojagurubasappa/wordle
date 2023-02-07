@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class WordleGame {
     private final int MAX_ROW = 6;
     private final int MAX_COL = 5;
+    private final Statistics statistics;
     private Character[][] gameBoard;
     private final String wordListFilePath;
     private ArrayList<String> words;
@@ -27,9 +28,11 @@ public class WordleGame {
     public WordleGame(String wordListFilePath) {
         this.words = new ArrayList<>();
         this.wordListFilePath = wordListFilePath;
+        this.statistics = new Statistics();
     }
 
     public void startGame() throws FileNotFoundException{
+        this.statistics.incrementGameCount();
         this.gameBoard = new Character[MAX_ROW][MAX_COL];
         this.loadWordlist();
         this.chosenWord = this.chooseARandomWord();
@@ -106,6 +109,10 @@ public class WordleGame {
         return allOptedLetters;
     }
 
+    public Statistics getStatistics() {
+        return this.statistics;
+    }
+
     private int generateRandomIndex(int range) {
         return (int) (Math.random() * range);
     }
@@ -130,6 +137,7 @@ public class WordleGame {
     private void performWordMatch(String word) {
         if (word.equals(this.chosenWord)) {
             this.hasWon = true;
+            this.statistics.incrementNumberOfGamesWon();
         }
     }
 
