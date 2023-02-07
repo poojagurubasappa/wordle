@@ -14,6 +14,8 @@ public class WordleGame {
     private String chosenWord;
     private final String DEFAULT_WORD = "debug";
     private int numberOfGuess;
+    private boolean hasWon;
+    private boolean hasLost;
     public WordleGame(String wordListFilePath) {
         this.words = new ArrayList<>();
         this.wordListFilePath = wordListFilePath;
@@ -24,6 +26,8 @@ public class WordleGame {
         this.loadWordlist();
         this.chosenWord = this.chooseARandomWord();
         this.numberOfGuess = 0;
+        this.hasWon = false;
+        this.hasLost = false;
     }
 
     public void loadWordlist() throws FileNotFoundException
@@ -59,6 +63,14 @@ public class WordleGame {
         return this.chosenWord;
     }
 
+    public boolean getHasWon() {
+        return hasWon;
+    }
+
+    public boolean getHasLost() {
+        return hasLost;
+    }
+
     private int generateRandomIndex(int range) {
         return (int) (Math.random() * range);
     }
@@ -72,15 +84,42 @@ public class WordleGame {
         }
     }
 
-    public void insertWordToGameBoard(String word) throws IllegalArgumentException{
+    private void updateGameStatus() {
+        this.numberOfGuess++;
+        int max_tries = getMAX_ROW();
+        if (this.getNumberOfGuess() >= max_tries) {
+            this.hasLost = true;
+        }
+    }
+
+    private void performWordMatch(String word) {
+        if (word.equals(this.chosenWord)) {
+            this.hasWon = true;
+        }
+    }
+
+    private boolean isNotNullOrEmptyString(String word) {
+        if(word == null || word.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void addLettersToGrid(String word) {
         char letter;
+        for (int i = 0; i < this.gameBoard.length - 1; i++) {
+            letter = word.charAt(i);
+            this.gameBoard[this.numberOfGuess][i] = letter;
+        }
+    }
+
+    public void insertWordToGameBoard(String word) throws IllegalArgumentException{
         String formattedWord = word.toUpperCase();
-        if(this.words.contains(formattedWord)) {
-            for (int i = 0; i < this.gameBoard.length - 1; i++) {
-                letter = formattedWord.charAt(i);
-                this.gameBoard[this.numberOfGuess][i] = letter;
-            }
-            this.numberOfGuess++;
+        if(this.isNotNullOrEmptyString(word) && this.words.contains(formattedWord)) {
+            this.addLettersToGrid(formattedWord);
+            this.performWordMatch(formattedWord);
+            this.updateGameStatus();
         } else {
             throw new IllegalArgumentException("Word Is Either Empty Or Not Found In Acceptable List");
         }
