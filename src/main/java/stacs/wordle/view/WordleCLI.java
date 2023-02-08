@@ -78,9 +78,9 @@ public class WordleCLI {
                 System.out.println();
             }
 
-            if (greenWords.contains(String.valueOf(i))) {
+            if (greenWords.contains(i)) {
                 printCustomInformation(Green_Bold, " | " + i + " | ", false);
-            } else if (yellowWords.contains(String.valueOf(i))) {
+            } else if (yellowWords.contains(i)) {
                 printCustomInformation(Yellow_Bold, " | " + i + " | ", false);
             } else if (allWords.contains(i)) {
                 printCustomInformation(Red_Bold, " | " + i + " | ", false);
@@ -106,19 +106,31 @@ public class WordleCLI {
         }
     }
 
+    private void restartGame() {
+        try {
+            this.wordleController.startNewGame();
+        } catch (FileNotFoundException e) {
+            printCustomInformation(Red_Font, "Sorry, something went wrong", true);
+        }
+        this.displayGameBoard();
+    }
+
     private void restartGameInstructions(Scanner scanner) {
         this.displayStatistics();
         System.out.println("Enter 1 to restart a new game, 0 to abort game");
         String choice = scanner.nextLine();
         if (choice.equals("1")) {
-            try {
-                this.wordleController.startNewGame();
-            } catch (FileNotFoundException e) {
-                printCustomInformation(Red_Font, "Sorry, something went wrong", true);
-            }
-            this.displayGameBoard();
+            this.restartGame();
         } else {
-            System.exit(0);
+            printCustomInformation(Red_Font,"Are you sure? Your game stats will be lost. Press Y to Confirm, any key to Cancel", true);
+            String answer = scanner.nextLine();
+            if(answer.equals("Y")) {
+                printCustomInformation(Purple_Font, "Good Bye, Thank you for playing", true);
+                System.exit(0);
+            } else {
+                this.restartGame();
+            }
+
         }
     }
 
@@ -134,7 +146,7 @@ public class WordleCLI {
         try {
             this.wordleController.insertWordToGameBoard(userInput);
             if (this.wordleController.hasWonGame()) {
-                printCustomInformation(Green_Padding, "Congratulations, you have won the game", true);
+                printCustomInformation(Green_Padding, "Congratulations, you have won this game", true);
                 this.restartGameInstructions(scanner);
             } else if (this.wordleController.hasLostGame()) {
                 printCustomInformation(Red_Font, "Game Over", true);
