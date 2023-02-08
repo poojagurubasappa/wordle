@@ -3,6 +3,7 @@ package stacs.wordle.controller;
 import stacs.wordle.model.WordleGame;
 import stacs.wordle.view.WordleCLI;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class WordleController {
@@ -43,5 +44,29 @@ public class WordleController {
 
     public void computeLetterPositioningIndicesByRow(int rowNumber) {
         game.computeLetterPositioningIndicesByRow(rowNumber);
+    }
+
+    public ArrayList<Character> getAllMatchedLetters() {
+        return game.getAllRightlyGuessedLetters();
+    }
+
+    public ArrayList<Character> getAllMisplacedLetters() {
+        return game.getAllMisplacedLetters();
+    }
+
+    public ArrayList<Character> getAllOptedLetters() {
+        return game.getAllOptedLetters();
+    }
+
+    public void startNewGame() throws FileNotFoundException {
+        game.startGame();
+    }
+
+    public int getNumberOfGamesPlayed() {
+        return game.getStatistics().getNumberOfGamesPlayed();
+    }
+
+    public double getWinPercentage() {
+        return game.getStatistics().getWinPercentage();
     }
 }
