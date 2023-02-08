@@ -20,7 +20,6 @@ public class WordleController {
      */
     public WordleController(WordleGame game, WordleCLI cli) {
         this.game = game;
-        //TODO: Revisit WordleCLI class naming to enable controller support multiple views.
         cli.setController(this);
     }
 

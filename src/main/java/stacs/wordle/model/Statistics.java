@@ -40,11 +40,9 @@ public class Statistics {
 
     /**
      * This method is for incrementing the win count each time a game is won by the player.
-     * @return the number of games won.
      */
-    public int incrementNumberOfGamesWon() {
-        //TODO: Change this implementation - code smell
-        return numberOfGamesWon++;
+    public void incrementNumberOfGamesWon() {
+        numberOfGamesWon++;
     }
 
     /**
