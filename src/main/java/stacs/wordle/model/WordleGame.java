@@ -3,6 +3,7 @@ package stacs.wordle.model;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class WordleGame {
@@ -185,24 +186,31 @@ public class WordleGame {
     }
 
     public void computeLetterPositioningIndicesByRow(int rowNumber) {
+        char letterInBoard, letterInOriginalWord;
+        HashMap<Integer, Character> unmatched = new HashMap<>();
         String originalWord = this.getChosenWord();
         this.resetLetterPositionDataSets();
-        char currentLetterInBoard;
-        char currentLetterInOriginalWord;
-        for (int i = 0; i < this.gameBoard[rowNumber].length && this.isNotEmptySquare(rowNumber, i); i++) {
-                currentLetterInBoard = this.gameBoard[rowNumber][i];
-                currentLetterInOriginalWord = originalWord.charAt(i);
-                if (Character.compare(currentLetterInBoard, currentLetterInOriginalWord) == 0) {
+        for (int i = 0; i < this.gameBoard[rowNumber].length; i++) {
+            if(this.isNotEmptySquare(rowNumber, i)) {
+                letterInBoard = this.gameBoard[rowNumber][i];
+                letterInOriginalWord = originalWord.charAt(i);
+                if (Character.compare(letterInBoard, letterInOriginalWord) == 0) {
                     greenLettersIndices.add(i);
-                    allRightlyGuessedLetters.add(currentLetterInBoard);
-                    originalWord = this.trimWord(originalWord, currentLetterInOriginalWord);
-                } else if (originalWord.contains(String.valueOf(currentLetterInBoard))) {
-                    yellowLettersIndices.add(i);
-                    allMisplacedLetters.add(currentLetterInBoard);
-                    originalWord = this.trimWord(originalWord, currentLetterInOriginalWord);
+                    allRightlyGuessedLetters.add(letterInOriginalWord);
+                    originalWord = this.trimWord(originalWord, letterInOriginalWord);
                 } else {
-                    redLettersIndices.add(i);
+                    unmatched.put(i, this.gameBoard[rowNumber][i]);
                 }
+            }
+        }
+        for (int i: unmatched.keySet()) {
+            if(originalWord.contains(String.valueOf(unmatched.get(i)))) {
+                yellowLettersIndices.add(i);
+                allMisplacedLetters.add(unmatched.get(i));
+                originalWord = this.trimWord(originalWord, unmatched.get(i));
+            } else {
+                redLettersIndices.add(i);
+            }
         }
     }
 }
