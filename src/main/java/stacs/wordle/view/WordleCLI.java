@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This is the class for command line interface for Wordle Game.
+ */
 public class WordleCLI {
     private WordleController wordleController;
     private final String White_Bold = "\033[1;97m";
@@ -18,10 +21,17 @@ public class WordleCLI {
     private final String Purple_Font = "\033[0;35m";
     private final String ColorNormalizer = "\033[0m";
 
+    /**
+     * This is for registering controller to the view.
+     * @param wordleController the wordle controller instance.
+     */
     public void setController(WordleController wordleController) {
         this.wordleController = wordleController;
     }
 
+    /**
+     * This method is for loading the CLI.
+     */
     public void start() {
         Scanner scanner = new Scanner(System.in);
         String userInput;
