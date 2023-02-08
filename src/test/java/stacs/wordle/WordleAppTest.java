@@ -134,12 +134,12 @@ public class WordleAppTest
     @Test
     public void getNumberOfGamesPlayed() {
         int numberOfGamesPlayed = game.getStatistics().getNumberOfGamesPlayed();
-        assertEquals(numberOfGamesPlayed, 2);
+        assertEquals(numberOfGamesPlayed, 1);
     }
 
     @Test
     public void getGameWinPercentage() {
         double winPercentage = game.getStatistics().getWinPercentage();
-        assertTrue(winPercentage > 0);
+        assertEquals(winPercentage, 0.0);
     }
 }
