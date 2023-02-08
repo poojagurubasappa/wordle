@@ -180,15 +180,18 @@ public class WordleGame {
         return trimmedWord;
     }
 
+    private boolean isNotEmptySquare(int row, int col) {
+        return this.gameBoard[row][col] != null;
+    }
+
     public void computeLetterPositioningIndicesByRow(int rowNumber) {
         String originalWord = this.getChosenWord();
         this.resetLetterPositionDataSets();
         char currentLetterInBoard;
         char currentLetterInOriginalWord;
-        for (int i = 0; i < this.gameBoard[rowNumber].length; i++) {
-            currentLetterInBoard = this.gameBoard[rowNumber][i];
-            currentLetterInOriginalWord = originalWord.charAt(i);
-            if (String.valueOf(currentLetterInBoard) != null) {
+        for (int i = 0; i < this.gameBoard[rowNumber].length && this.isNotEmptySquare(rowNumber, i); i++) {
+                currentLetterInBoard = this.gameBoard[rowNumber][i];
+                currentLetterInOriginalWord = originalWord.charAt(i);
                 if (Character.compare(currentLetterInBoard, currentLetterInOriginalWord) == 0) {
                     greenLettersIndices.add(i);
                     allRightlyGuessedLetters.add(currentLetterInBoard);
@@ -200,7 +203,6 @@ public class WordleGame {
                 } else {
                     redLettersIndices.add(i);
                 }
-            }
         }
     }
 }
