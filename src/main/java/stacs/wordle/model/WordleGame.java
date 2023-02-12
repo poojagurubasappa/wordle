@@ -1,10 +1,8 @@
 package stacs.wordle.model;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 /**
  * Wordle Game Class represents the model to encapsulate
@@ -43,7 +41,7 @@ public class WordleGame {
      * This method is to turn the game ON.
      * @throws FileNotFoundException when dictionary file path is invalid or empty.
      */
-    public void startGame() throws FileNotFoundException{
+    public void startGame() throws IOException{
         this.statistics.incrementGameCount();
         this.gameBoard = new Character[MAX_ROW][MAX_COL];
         this.loadWordlist();
@@ -60,13 +58,17 @@ public class WordleGame {
      * This method reads the dictionary file, changes its case, stores each word, in an ArrayList.
      * @throws FileNotFoundException when the dictionary file is not found in location specified.
      */
-    public void loadWordlist() throws FileNotFoundException
+    public void loadWordlist() throws IOException
     {
-        Scanner scanner = new Scanner(new FileReader(wordListFilePath));
-        while (scanner.hasNextLine()) {
-            this.words.add(scanner.nextLine().toUpperCase());
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(wordListFilePath);
+        if(inputStream == null) {
+            throw new IOException();
         }
-        scanner.close();
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+            this.words.add(line.toUpperCase());
+        }
     }
 
     /**
