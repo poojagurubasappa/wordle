@@ -2,7 +2,7 @@ package stacs.wordle.view;
 
 import stacs.wordle.controller.WordleController;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -119,7 +119,7 @@ public class WordleCLI {
     private void restartGame() {
         try {
             this.wordleController.startNewGame();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             printCustomInformation(Red_Font, "Sorry, something went wrong", true);
         }
         this.displayGameBoard();

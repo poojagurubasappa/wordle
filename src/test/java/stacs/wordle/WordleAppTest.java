@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import stacs.wordle.model.WordleGame;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,20 +15,19 @@ public class WordleAppTest
 {
     WordleGame game;
     @BeforeEach
-    void setup() throws FileNotFoundException {
-        game = new WordleGame("src/test/resources/wordlist-test.txt");
+    void setup() throws IOException {
+        game = new WordleGame("wordlist-test.txt");
         game.startGame();
     }
 
     @Test
-    public void shouldLoadWordlist() throws FileNotFoundException
-    {
+    public void shouldLoadWordlist() {
         assertEquals(3, game.getWords().size());
     }
 
     @Test
-    public void shouldStartGame_wordFileNameCannotBeInvalid() throws FileNotFoundException {
-        assertThrows(FileNotFoundException.class, () ->  { WordleGame game = new WordleGame("invalidFilePath.txt"); game.startGame(); });
+    public void shouldStartGame_wordFileNameCannotBeInvalid() {
+        assertThrows(IOException.class, () ->  { WordleGame game = new WordleGame("invalidFilePath.txt"); game.startGame(); });
     }
 
     @Test

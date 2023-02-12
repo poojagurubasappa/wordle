@@ -3,7 +3,7 @@ package stacs.wordle.controller;
 import stacs.wordle.model.WordleGame;
 import stacs.wordle.view.WordleCLI;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +20,6 @@ public class WordleController {
      */
     public WordleController(WordleGame game, WordleCLI cli) {
         this.game = game;
-        //TODO: Revisit WordleCLI class naming to enable controller support multiple views.
         cli.setController(this);
     }
 
@@ -113,9 +112,9 @@ public class WordleController {
 
     /**
      * This method is for starting a new game.
-     * @throws FileNotFoundException when the dictionary file is unable to be loaded correctly.
+     * @throws IOException when the dictionary file is unable to be loaded correctly.
      */
-    public void startNewGame() throws FileNotFoundException {
+    public void startNewGame() throws IOException {
         game.startGame();
     }
 
